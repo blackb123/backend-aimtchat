@@ -9,6 +9,7 @@ from app.routes import auth, message, conversation
 from app.core.socket import sio, user_to_sid
 from datetime import datetime
 import socketio
+import os
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -24,11 +25,11 @@ fastapi_app.include_router(message.msg_router, prefix="/messages", tags=["messag
 fastapi_app.include_router(conversation.conv_router, prefix="/conversations", tags=["conversations"])
 
 # CORS middleware
-origins = ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173"]
+
 
 fastapi_app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
